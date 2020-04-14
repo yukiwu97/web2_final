@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import dateFormat from 'dateformat';
 import { Link } from 'react-router-dom';
+import Popup from "reactjs-popup";
+import Charts from "./chart.component";
 
 class Record extends Component {
 
@@ -21,35 +23,15 @@ class Record extends Component {
     }
 
     componentDidMount() {
-        if (this.state.selectedYear == 0 && this.state.selectedMonth == 0) {
-            axios.get("http://localhost:3003/record")
+        axios.get("http://localhost:3003/record")
             .then(res => {
                 const recordsData = res.data;
                 console.log(recordsData);
                 this.setState({
-                    recordsList : recordsData,
+                    recordsList : recordsData.sort((a,b) => (a.year > b.year) ? 1: (a.year ===b.year) ? ((a.month > b.month) ? 1:-1):-1),
                     sum: this.calculateSum(recordsData)
                 });
             })
-        } else {
-            axios.get("http://localhost:3003/record/yearMonth/0/4")
-            .then(res => {
-                const recordsData = res.data;
-                console.log(recordsData);
-                this.setState({
-                    recordsList : recordsData,
-                    sum: this.calculateSum(recordsData)
-                });
-            })
-        }
-        // axios.get("http://localhost:3003/record")
-        //     .then(res => {
-        //         const recordsData = res.data;
-        //         console.log(recordsData);
-        //         this.setState({
-        //             recordsList : recordsData
-        //         });
-        //     })
     }
 
     deleteRecord(e, record) {
@@ -144,6 +126,9 @@ class Record extends Component {
             <div className="expense_sum">
                 <label>total expense: </label>
                 <span>{'$' + this.state.sum.toFixed(2)}</span>
+        <Popup modal trigger={<button> Show Expense Chart</button>} maxWidth="300" maxHeight="auto" position="right center">
+                    <Charts datalist={this.state.recordsList} month={this.state.selectedMonth} year={this.state.selectedYear}/>
+                </Popup>
             </div>
             <table>
                 <thead>

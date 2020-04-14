@@ -70,7 +70,7 @@ class AddRecords extends Component {
 
     render() {
         return(
-            <div className="record">
+            <div className="add_record">
             <h2>Add Expense</h2>
             <form id="add_record_form" onSubmit={this.onSubmit}>
                 <div className="form-field">
