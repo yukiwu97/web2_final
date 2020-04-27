@@ -23,7 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "client": "npm run start_my",
+    "client": "react-scripts start",
     "server": "cd server && npm run start"
   },
   "eslintConfig": {
