@@ -18,6 +18,7 @@
     "reactjs-popup": "^1.5.0"
   },
   "scripts": {
+    "postinstall": "npm install --prefix server && npm install",
     "start":"concurrently \"npm run server\" \"npm run client\"",
     "start_my": "react-scripts start",
     "build": "react-scripts build",
