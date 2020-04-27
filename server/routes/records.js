@@ -40,11 +40,11 @@ router.route('/yearMonth/:year/:month').get((req, res) => {
     console.log("get by year month called!!")
     var findParam = {};
     const yearToFind = parseInt(req.params.year);
-    if (yearToFind != 0) {
+    if (yearToFind !== 0) {
       findParam.year = yearToFind;
     }
     const monthToFind = parseInt(req.params.month);
-    if (monthToFind != 0) {
+    if (monthToFind !== 0) {
       findParam.month = monthToFind;
     }
     console.log('findParam is: ' + findParam.year + ', ' + findParam.month)

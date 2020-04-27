@@ -79,7 +79,7 @@ class Record extends Component {
                 const recordsData = res.data;
                 console.log(recordsData);
                 this.setState({
-                    recordsList : recordsData,
+                    recordsList : recordsData.sort((a,b) => (a.year > b.year) ? 1: (a.year ===b.year) ? ((a.month > b.month) ? 1:-1):-1),
                     sum: this.calculateSum(recordsData)
                 });
             })
@@ -126,11 +126,15 @@ class Record extends Component {
             <div className="expense_sum">
                 <label>total expense: </label>
                 <span>{'$' + this.state.sum.toFixed(2)}</span>
-        <Popup modal trigger={<button> Show Expense Chart</button>} maxWidth="300" maxHeight="auto" position="right center">
+                <Popup modal contentStyle={{width: "80%"}}
+                trigger={<button> Show Expense Chart</button>}>{ close => (
+                    <div className="modal">
+                    <div className="close" onClick={close}>&times;</div>
                     <Charts datalist={this.state.recordsList} month={this.state.selectedMonth} year={this.state.selectedYear}/>
-                </Popup>
+                    </div>
+                )}</Popup>
             </div>
-            <table>
+            <table className="records_table">
                 <thead>
                     <tr>
                         <th></th>
@@ -146,9 +150,9 @@ class Record extends Component {
                     {this.state.recordsList.map(record =>
                         <tr>
                             <td className='counterCell'></td>
-                            <td className='desc-col'>{this.getLocalFormatDate(record.date)}</td>
-                            <td className='desc-col'>{record.amount.toFixed(2)}</td>
-                            <td className='desc-col'>{record.category}</td>
+                            <td className='desc-col' id='table_date'>{this.getLocalFormatDate(record.date)}</td>
+                            <td className='desc-col' id='table_amount'>$ {record.amount.toFixed(2)}</td>
+                            <td className='desc-col' id='table_category'>{record.category}</td>
                             <td className='desc-col'>{record.notes}</td>
                             <td className='button-col'>
                                 <Link to={
