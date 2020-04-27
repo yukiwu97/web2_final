@@ -18,13 +18,13 @@
     "reactjs-popup": "^1.5.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start":"concurrently \"npm run server\" \"npm run client\"",
+    "start_my": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "client": "npm start",
-    "server": "cd server && npm start",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "client": "npm run start_my",
+    "server": "cd server && npm run start",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build"
   },
   "eslintConfig": {
