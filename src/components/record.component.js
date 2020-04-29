@@ -23,8 +23,8 @@ class Record extends Component {
     }
 
     componentDidMount() {
-        //axios.get("http://localhost:3003/record")
-        axios.get("/record")
+        axios.get("http://127.0.0.1:3003/record")
+        //axios.get("/record")
             .then(res => {
                 const recordsData = res.data;
                 console.log(recordsData);
@@ -32,6 +32,10 @@ class Record extends Component {
                     recordsList : recordsData.sort((a,b) => (a.year > b.year) ? 1: (a.year ===b.year) ? ((a.month > b.month) ? 1:-1):-1),
                     sum: this.calculateSum(recordsData)
                 });
+            })
+            .catch(error => {
+                console.log("loading records failed..")
+                console.log(error)
             })
     }
 

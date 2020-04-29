@@ -22,12 +22,11 @@
     "mongoose": "^5.9.10"
   },
   "scripts": {
-    "start":"concurrently \"npm run server\" \"npm run client\"",
+    "start":"concurrently \"npm run server\" \"npm run start_my\"",
     "start_my": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "client": "react-scripts start",
     "server": "cd server && node index.js"
   },
   "eslintConfig": {
@@ -44,6 +43,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "http://127.0.0.1:3003"
+  }
 }
