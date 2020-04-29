@@ -23,7 +23,8 @@ class Record extends Component {
     }
 
     componentDidMount() {
-        axios.get("http://localhost:3003/record")
+        //axios.get("http://localhost:3003/record")
+        axios.get("/record")
             .then(res => {
                 const recordsData = res.data;
                 console.log(recordsData);
