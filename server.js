@@ -1,7 +1,8 @@
-const path = require("path")
+// const path = require("path")
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const routes = require('./routes');
 
 require('dotenv').config();
 
@@ -12,7 +13,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, "client", "build")))
+// app.use(express.static(path.join(__dirname, "client", "build")))
+app.use(express.static('client/build'));
+app.use(routes);
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(
@@ -28,15 +31,15 @@ connection.once(
     }
 );
 
-const addRouter_record = require('./routes/records');
+// const addRouter_record = require('./routes/records');
 
 app.get('/', (req, res) => res.send('Hello World!!!'))
-app.use('/record', addRouter_record);
+// app.use('/record', addRouter_record);
 
 
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-});
+// app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+// });
 
 app.listen(port, 
     () => console.log(`Running on ${port}`)
