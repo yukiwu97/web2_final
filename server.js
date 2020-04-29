@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, "client", "build")))
+// app.use(express.static(path.join(__dirname, "client", "build")))
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(
@@ -34,9 +34,9 @@ app.get('/', (req, res) => res.send('Hello World!!!'))
 app.use('/record', addRouter_record);
 
 
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-});
+// app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+// });
 
 app.listen(port, 
     () => console.log(`Running on ${port}`)
