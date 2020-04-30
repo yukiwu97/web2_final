@@ -23,8 +23,9 @@ class Record extends Component {
     }
 
     componentDidMount() {
-        //axios.get("http://127.0.0.1:3003/record")
-        axios.get("/record")
+        const port = process.env.PORT || 3003;
+        axios.get("http://127.0.0.1:" + port + "/record")
+        //axios.get("/record")
             .then(res => {
                 const recordsData = res.data;
                 console.log(recordsData);
