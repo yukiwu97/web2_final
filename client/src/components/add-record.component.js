@@ -59,7 +59,7 @@ class AddRecords extends Component {
             category: this.state.category,
             notes: this.state.notes
         }
-        axios.post('http://localhost:3003/record/add', record)
+        axios.post('/record/add', record)
             .then(res => {
                 console.log(res);
                 console.log(res.data);

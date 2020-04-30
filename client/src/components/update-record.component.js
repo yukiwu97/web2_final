@@ -67,7 +67,7 @@ class UpdateRecords extends Component {
             category: this.state.category,
             notes: this.state.notes
         }
-        axios.post('http://localhost:3003/record/update/' + this.state.id, record)
+        axios.post('/record/update/' + this.state.id, record)
             .then(res => {
                 console.log(res);
                 console.log(res.data);

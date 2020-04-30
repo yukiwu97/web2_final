@@ -23,9 +23,6 @@ class Record extends Component {
     }
 
     componentDidMount() {
-        //console.log(window.location.href)
-        //const port = process.env.PORT || 3003;
-        //axios.get("http://127.0.0.1:" + port + "/record")
         axios.get("/record")
             .then(res => {
                 const recordsData = res.data;
@@ -44,7 +41,7 @@ class Record extends Component {
     deleteRecord(e, record) {
         e.preventDefault();
 
-        axios.get('http://localhost:3003/record/delete/' + record._id)
+        axios.get('/record/delete/' + record._id)
             .then(res => {
                 console.log(res);
                 console.log(res.data);
@@ -81,7 +78,7 @@ class Record extends Component {
     onSubmitSelect(e) {
         e.preventDefault();
 
-        axios.get("http://localhost:3003/record/yearMonth/" + this.state.selectedYear + "/" + this.state.selectedMonth)
+        axios.get("/record/yearMonth/" + this.state.selectedYear + "/" + this.state.selectedMonth)
             .then(res => {
                 const recordsData = res.data;
                 console.log(recordsData);
