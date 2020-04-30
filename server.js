@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, "client", "build")))
 // app.use(express.static('client/build'));
 app.use(routes);
 
-const uri = process.env.ATLAS_URI;
+const uri = process.env.MONGODB_URI || 'mongodb+srv://root:root@cluster0-dzkvv.mongodb.net/appDB?retryWrites=true&w=majority';
 mongoose.connect(
     uri,
     { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
