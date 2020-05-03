@@ -1,5 +1,21 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import FilledInput from '@material-ui/core/FilledInput';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
+import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
+import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
 
 class AddRecords extends Component {
     constructor(props) {
@@ -21,14 +37,17 @@ class AddRecords extends Component {
     }
 
     componentDidMount() {
+        const utcDate = new Date();
+        const localDate = new Date(utcDate.getTime() - utcDate.getTimezoneOffset() * 60000);
         this.setState({
-            date: new Date().toISOString().split('T')[0]
+            date: localDate
         });
     }
 
-    onChangeDate(e) {
+    onChangeDate(newdate) {
+        console.log('newdate' + newdate)
         this.setState({
-            date: e.target.value
+            date: newdate
         });
     }
 
@@ -72,35 +91,78 @@ class AddRecords extends Component {
         return(
             <div className="record">
             <h2>Add Expense</h2>
-            <form id="add_record_form" onSubmit={this.onSubmit}>
-                <div className="form-field">
-                    <label>Date </label>
-                    <input type="date" name="date" placeholder="" value={this.state.date} onChange={this.onChangeDate} required />
-                </div>
-                <div className="form-field">
-                    <label>Amount </label>
-                    <input type="number" name="amount" placeholder="" value={this.state.amount} onChange={this.onChangeAmount} required/>
-                </div>
-                <div className="form-field">
-                    <label>Category </label>
-                    <select id="categories" name="category" value={this.state.category} onChange={this.onChangeCategory}>
-                        <option value="Food">Food</option>
-                        <option value="Transportation">Transportation</option>
-                        <option value="Household">Household</option>
-                        <option value="Apparel">Apparel</option>
-                        <option value="Beauty">Beauty</option>
-                        <option value="Health">Health</option>
-                        <option value="Education">Education</option>
-                        <option value="Gift">Gift</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-                <div className="form-field">
-                    <label>Notes </label>
-                    <input type="text" name="notes" placeholder="" value={this.state.notes} onChange={this.onChangeNotes}/>
-                </div>
-                <input className="submit" type="submit" value="Submit"></input>
-            </form>
+            <div className="form_ff">
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker fullWidth
+                    disableToolbar
+                    variant="filled"
+                    format="MM/dd/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    label="Date"
+                    value={this.state.date}
+                    onChange={this.onChangeDate}
+                    KeyboardButtonProps={{
+                'aria-label': 'change date',
+                }}/>
+            </MuiPickersUtilsProvider>
+            </div>
+            <div className="form_ff">
+            <FormControl variant="filled" fullWidth>
+            <InputLabel htmlFor="filled-adornment-amount">Amount</InputLabel>
+            <FilledInput
+                id="filled-adornment-amount"
+                value={this.state.amount}
+                onChange={this.onChangeAmount}
+                startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                type="number"
+                required
+                />
+            <FormHelperText>*Required</FormHelperText>
+            </FormControl>
+            </div>
+
+            <div className="form_ff">
+            <FormControl variant="filled" fullWidth>
+                <InputLabel id="demo-simple-select-outlined-label">Cateogry</InputLabel>
+                <Select
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={this.state.category}
+                onChange={this.onChangeCategory}>
+                    <MenuItem value="Food">Food</MenuItem>
+                    <MenuItem value="Transportation">Transportation</MenuItem>
+                    <MenuItem value="Household">Household</MenuItem>
+                    <MenuItem value="Apparel">Apparel</MenuItem>
+                    <MenuItem value="Beauty">Beauty</MenuItem>
+                    <MenuItem value="Health">Health</MenuItem>
+                    <MenuItem value="Education">Education</MenuItem>
+                    <MenuItem value="Travel">Travel</MenuItem>
+                    <MenuItem value="Other">Other</MenuItem>
+                </Select>
+                <FormHelperText>*Required</FormHelperText>
+            </FormControl>
+            </div>
+
+            <div className="form_ff">
+            <FormControl variant="outlined" fullWidth>
+            <InputLabel htmlFor="filled-adornment-amount">Note</InputLabel>
+            <OutlinedInput
+                id="filled-adornment-amount"
+                value={this.state.notes}
+                onChange={this.onChangeNotes}
+                required
+                multiline
+                rows={4}
+                variant="outlined"
+                />
+            <FormHelperText>(Optional)</FormHelperText>
+            </FormControl>
+            </div>
+
+            <div className="form_b">
+            <Button variant="outlined" size="medium" style={{ color: 'green' }} onClick={this.onSubmit} color="inherit"><b>ADD</b> &nbsp;<AddCircleRoundedIcon/></Button>
+            </div>
             </div>
         )
     }

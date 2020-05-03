@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { slide as Menu } from 'react-burger-menu'
+import AccountBalanceRoundedIcon from '@material-ui/icons/AccountBalanceRounded';
+import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
 
 class Navbar extends Component {
-    // showSettings (event) {
-    //     event.preventDefault();
-    // }
 
     render() {
         return(
         <nav className="sidenav">
+        <div>
+            <h3><b>MONEY <br/>MANGER</b></h3>
             <ul>
-            <li><Link to="/">My Money Manager</Link></li>
             <br/><br/><br/>
-            <li><Link to="/create">Add Expense</Link></li>
+            <div className="navItem"><li><Link to="/"><AccountBalanceRoundedIcon style={{ fontSize: 65}}/></Link></li></div>
+            <br/><br/><br/>
+            <div className="navItem"><li><Link to="/create"><AddCircleRoundedIcon style={{ fontSize: 65}}/></Link></li></div>
             </ul>
-    {/* <Link to="/">My Money Manager</Link> <br/>
-    <Link to="/create">Add Expense</Link> */}
+        </div>
         </nav>
         )
     }

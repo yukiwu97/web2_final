@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import dateFormat from 'dateformat';
-import { Link } from 'react-router-dom';
 import Popup from "reactjs-popup";
 import Charts from "./chart.component";
+import BorderColorRoundedIcon from '@material-ui/icons/BorderColorRounded';
+import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
+import IconButton from '@material-ui/core/IconButton';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
+import DonutLargeRoundedIcon from '@material-ui/icons/DonutLargeRounded';
+
+
 
 class Record extends Component {
 
@@ -49,6 +59,15 @@ class Record extends Component {
         window.location = '/';
     }
 
+    updateRecord(e, record) {
+        e.preventDefault();
+        this.props.history.push({
+            pathname: '/update',
+            updateProps: record
+        })
+    }
+    
+
     getLocalFormatDate(d) {
         const utcDate = new Date(d);
         const localDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000);
@@ -90,55 +109,77 @@ class Record extends Component {
     }
 
     render() {
+
         return(
         <div className="record">
-            <h1>Money Manager</h1>
-            <form onSubmit={this.onSubmitSelect}>
-                <label>Select Year: </label>
-                <select id="year" name="year" value={this.state.selectedYear} onChange={this.handleSelectYear}>
-                    <option value="0" selected>Select All</option>
-                    <option value="2020">2020</option>
-                    <option value="2019">2019</option>
-                    <option value="2018">2018</option>
-                    <option value="2017">2017</option>
-                    <option value="2016">2016</option>
-                    <option value="2015">2015</option>
-                    <option value="2014">2014</option>
-                    <option value="2013">2013</option>
-                    <option value="2012">2012</option>
-                    <option value="2011">2011</option>
-                    <option value="2010">2010</option>
-                </select>
-                <label>Select Month: </label>
-                <select id="month" name="month" onChange={this.handleSelectMonth}>
-                    <option value="0" selected>Select All</option>
-                    <option value="1">JAN</option>
-                    <option value="2">FEB</option>
-                    <option value="3">MAR</option>
-                    <option value="4">APR</option>
-                    <option value="5">MAY</option>
-                    <option value="6">JUN</option>
-                    <option value="7">JUL</option>
-                    <option value="8">AUG</option>
-                    <option value="9">SEP</option>
-                    <option value="10">OCT</option>
-                    <option value="11">NOV</option>
-                    <option value="12">DEC</option>
-                </select>
-                <input className="submit" type="submit" value="Submit"></input>
-            </form>
-            <div className="expense_sum">
-                <label>total expense: </label>
-                <span>{'$' + this.state.sum.toFixed(2)}</span>
+            <div className="records_header">
+            <div className="yymm">
+            <FormControl variant="outlined">
+                <InputLabel id="demo-simple-select-outlined-label">YEAR</InputLabel>
+                <Select
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={this.state.selectedYear}
+                onChange={this.handleSelectYear}
+                label="Age">
+                    <MenuItem value="0">All</MenuItem>
+                    <MenuItem value="2020">2020</MenuItem>
+                    <MenuItem value="2019">2019</MenuItem>
+                    <MenuItem value="2018">2018</MenuItem>
+                    <MenuItem value="2017">2017</MenuItem>
+                    <MenuItem value="2016">2016</MenuItem>
+                    <MenuItem value="2015">2015</MenuItem>
+                    <MenuItem value="2014">2014</MenuItem>
+                    <MenuItem value="2013">2013</MenuItem>
+                    <MenuItem value="2012">2012</MenuItem>
+                    <MenuItem value="2011">2011</MenuItem>
+                    <MenuItem value="2010">2010</MenuItem>
+                </Select>
+            </FormControl>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <FormControl variant="outlined" >
+                <InputLabel id="demo-simple-select-outlined-label">MONTH</InputLabel>
+                <Select
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={this.state.selectedMonth}
+                onChange={this.handleSelectMonth}
+                label="Age">
+                    <MenuItem value="0">All</MenuItem>
+                    <MenuItem value="1">JAN</MenuItem>
+                    <MenuItem value="2">FEB</MenuItem>
+                    <MenuItem value="3">MAR</MenuItem>
+                    <MenuItem value="4">APR</MenuItem>
+                    <MenuItem value="5">MAY</MenuItem>
+                    <MenuItem value="6">JUN</MenuItem>
+                    <MenuItem value="7">JUL</MenuItem>
+                    <MenuItem value="8">AUG</MenuItem>
+                    <MenuItem value="9">SEP</MenuItem>
+                    <MenuItem value="10">OCT</MenuItem>
+                    <MenuItem value="11">NOV</MenuItem>
+                    <MenuItem value="12">DEC</MenuItem>
+                </Select>
+            </FormControl>
+            <div className="searchButton">
+            <Button variant="outlined" size="small" style={{ color: 'green' }} color="inherit" onClick={this.onSubmitSelect}>Search</Button>
+            </div>
+            </div>
+            <div className='header_sum'>
+            <div className="sum_label"><label>TOTAL: &nbsp;&nbsp;</label></div>
+                <span className="sum_num"><b>{'$' + this.state.sum.toFixed(2)}</b></span>
                 <Popup modal contentStyle={{width: "80%"}}
-                trigger={<button> Show Expense Chart</button>}>{ close => (
+                trigger={
+                    <div className="chartButton"><Button variant="outlined" size="small" style={{ color: 'green' }} color="inherit" >Show Chart &nbsp;<DonutLargeRoundedIcon/></Button></div>}>{ close => (
                     <div className="modal">
                     <div className="close" onClick={close}>&times;</div>
                     <Charts datalist={this.state.recordsList} month={this.state.selectedMonth} year={this.state.selectedYear}/>
                     </div>
-                )}</Popup>
+                )}
+                </Popup>
             </div>
-            <table className="records_table">
+            </div>
+
+            <div className="records_table">
+            <table>
                 <thead>
                     <tr>
                         <th></th>
@@ -157,20 +198,22 @@ class Record extends Component {
                             <td className='desc-col' id='table_date'>{this.getLocalFormatDate(record.date)}</td>
                             <td className='desc-col' id='table_amount'>$ {record.amount.toFixed(2)}</td>
                             <td className='desc-col' id='table_category'>{record.category}</td>
-                            <td className='desc-col'>{record.notes}</td>
+                            <td className='desc-col' id='table_notes'>{record.notes}</td>
                             <td className='button-col'>
-                                <Link to={
-                                    {
-                                        pathname: '/update',
-                                        updateProps: record
-                                    }
-                                }><button>update</button></Link>
+                                <IconButton size="small" style={{ color: '#b6b3b3' }} className="table_update_icon" onClick = {(e) => {this.updateRecord(e, record)}}>
+                                    <BorderColorRoundedIcon/>
+                                </IconButton>
                             </td>
-                            <td className='button-col'><button onClick = {(e) => {this.deleteRecord(e, record)}}>delete</button></td>
+                            <td className='button-col'>
+                                <IconButton size="small" style={{ color: '#b6b3b3' }} className="table_delete_icon" onClick = {(e) => {this.deleteRecord(e, record)}}>
+                                    <DeleteForeverRoundedIcon/>
+                                </IconButton>
+                            </td>
                         </tr>
                     )}
                 </tbody>
             </table>
+            </div>
         </div>
     )
     }

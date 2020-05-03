@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import * as d3 from 'd3'
+import * as d3 from 'd3';
 
 class Charts extends Component {
     constructor(props) {
         super(props);
-
         this.data = props.datalist;
         this.month = props.month;
         this.year = props.year;
@@ -40,7 +39,7 @@ class Charts extends Component {
         console.log(classifiedData);
         const svgWidth = 800;
         const svgHeight = 600;
-        const margin = 10;
+        const margin = 0;
 
         var pie = d3.pie().sort(null).value(d => d.count);
 
@@ -48,13 +47,12 @@ class Charts extends Component {
 
         const pieSvg = d3.select(this.refs.pieChart)
             .append("svg").attr("width", svgWidth).attr("height", svgHeight)
-            .append("g").attr("transform", "translate(" + svgWidth * 0.4 + "," + svgHeight / 2 + ")");
+            .append("g").attr("transform", "translate(" + svgWidth * 0.5 + "," + svgHeight *0.5 + ")");
 
         // set the color scale
         var color = d3.scaleOrdinal()
             .domain(classifiedData.map(d => d.name))
             .range(d3.quantize(t => d3.interpolateSpectral(t * 0.6 + 0.1), classifiedData.length + 1).reverse());
-            //.range(d3.quantize(d3.interpolate("red", "blue"), classifiedData.length + 1));
 
         // set path for pie char
         var arc = d3.arc()
@@ -63,8 +61,8 @@ class Charts extends Component {
         
         // set path for label
         var arcLabel = d3.arc()
-            .innerRadius(radius * 0.82) 
-            .outerRadius(radius * 0.82);
+            .innerRadius(radius * 0.85) 
+            .outerRadius(radius * 0.85);
 
         var data_ready = pie(classifiedData)
 
@@ -120,10 +118,10 @@ class Charts extends Component {
     render() {
         return(
         <div className="pie_chart">
-            <h1>Expenses Summary</h1>
-            <div className="show_year_month">
-                YEAR: &nbsp; {parseInt(this.year) === 0 ? 'All' : this.year} &nbsp;&nbsp;
-                MONTH: &nbsp; {this.getMonth(this.month)}
+            <h2>Expenses Summary</h2>
+            <div className="chart_yymm">
+                <span>YEAR: &nbsp;</span> {parseInt(this.year) === 0 ? 'All' : this.year} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>MONTH: &nbsp;</span> {this.getMonth(this.month)}
             </div>
             <div ref="pieChart"></div>
         </div>
