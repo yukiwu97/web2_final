@@ -107,7 +107,7 @@ table {
   width: 99%;
   counter-reset: tableCount;
   font-size: 18px;
-  margin-top: 3%;
+  margin-top: 50px;
 }
 .counterCell:before {
   content: counter(tableCount);
