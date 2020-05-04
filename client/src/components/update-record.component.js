@@ -37,7 +37,8 @@ class UpdateRecords extends Component {
             originDate: new Date(props.location.updateProps.date),
             originAmount: props.location.updateProps.amount,
             originCategory: props.location.updateProps.category,
-            originNotes: props.location.updateProps.notes
+            originNotes: props.location.updateProps.notes,
+            error_input: false
         }
     }
 
@@ -83,13 +84,18 @@ class UpdateRecords extends Component {
             category: this.state.category,
             notes: this.state.notes
         }
-        axios.post('/record/update/' + this.state.id, record)
+        if (this.state.amount > 0) {
+            axios.post('/record/update/' + this.state.id, record)
             .then(res => {
                 console.log(res);
                 console.log(res.data);
             })
-
-        window.location = '/';
+            window.location = '/';
+        } else {
+            this.setState({
+                error_input: true
+            });
+        }
     }
 
     render() {
@@ -122,8 +128,10 @@ class UpdateRecords extends Component {
                 startAdornment={<InputAdornment position="start">$</InputAdornment>}
                 type="number"
                 required
+                error={this.state.error_input}
                 />
             <FormHelperText>*Required</FormHelperText>
+            <FormHelperText hidden={!this.state.error_input} error >amount should be greater than 0</FormHelperText>
             </FormControl>
             </div>
 

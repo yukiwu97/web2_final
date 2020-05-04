@@ -19,6 +19,7 @@
     "react": "^16.13.1",
     "react-burger-menu": "^2.6.13",
     "react-dom": "^16.13.1",
+    "react-material-ui-form-validator": "^2.0.10",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "reactjs-popup": "^1.5.0"

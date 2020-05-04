@@ -32,7 +32,8 @@ class AddRecords extends Component {
             date: '',
             amount: '',
             category: 'Food',
-            notes: ''
+            notes: '',
+            error_input: false
         }
     }
 
@@ -78,13 +79,18 @@ class AddRecords extends Component {
             category: this.state.category,
             notes: this.state.notes
         }
-        axios.post('/record/add', record)
+        if (this.state.amount > 0) {
+            axios.post('/record/add', record)
             .then(res => {
                 console.log(res);
                 console.log(res.data);
             })
-
-        window.location = '/';
+            window.location = '/';
+        } else {
+            this.setState({
+                error_input: true
+            });
+        }
     }
 
     render() {
@@ -117,8 +123,10 @@ class AddRecords extends Component {
                 startAdornment={<InputAdornment position="start">$</InputAdornment>}
                 type="number"
                 required
+                error={this.state.error_input}
                 />
             <FormHelperText>*Required</FormHelperText>
+            <FormHelperText hidden={!this.state.error_input} error >amount should be greater than 0</FormHelperText>
             </FormControl>
             </div>
 
